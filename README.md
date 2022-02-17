@@ -13,6 +13,9 @@ $ yarn prisma migrate dev
 ## Running the app
 
 ```bash
+# docker
+$ docker-compose up
+
 # development
 $ yarn start:dev
 

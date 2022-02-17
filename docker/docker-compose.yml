@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  database:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=facebook-api
+    ports:
+      - "5432:5432"
