@@ -9,9 +9,9 @@ import {
   Delete,
 } from '@nestjs/common';
 import { PostsService } from '../services/posts.service';
-import {CreatePostDto} from "../dtos/create-post.dto";
-import {UpdatePostDto} from "../dtos/update-post.dto";
-import {JwtGuard} from "../../authentication/guards/jwt.guard";
+import { CreatePostDto } from '../dtos/create-post.dto';
+import { UpdatePostDto } from '../dtos/update-post.dto';
+import { JwtGuard } from '../../authentication/guards/jwt.guard';
 
 @UseGuards(JwtGuard)
 @Controller('posts')

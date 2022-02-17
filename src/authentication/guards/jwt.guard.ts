@@ -1,4 +1,4 @@
-import {CanActivate, ExecutionContext, Injectable} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import { UsersService } from '../../users/services/users.service';
 
@@ -12,6 +12,6 @@ export class JwtGuard implements CanActivate {
     if (!token) return false;
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    return !!await this.usersService.findUnique({ id: payload['id'] });
+    return !!(await this.usersService.findUnique({ id: payload['id'] }));
   }
 }

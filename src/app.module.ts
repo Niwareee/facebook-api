@@ -6,5 +6,4 @@ import { PostsModule } from './posts/posts.module';
 @Module({
   imports: [AuthenticationModule, UsersModule, PostsModule],
 })
-
 export class AppModule {}
