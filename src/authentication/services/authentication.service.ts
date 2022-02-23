@@ -9,20 +9,20 @@ import { LoginDto } from '../dtos/login.dto';
 export class AuthenticationService {
   constructor(private readonly usersService: UsersService) {}
 
-  async login({ email, password }: LoginDto) {
+  async login({ email, password }: LoginDto): Promise<User> {
     const user = await this.usersService.findUnique({ email });
-    if (!user || (user.password !== password)) {
+    if (!user || user.password !== password) {
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
     }
 
     return user;
   }
 
-  register(dto: RegisterDto) {
+  register(dto: RegisterDto): Promise<User> {
     return this.usersService.create(dto);
   }
 
-  generateAccessToken(user: User) {
+  generateAccessToken(user: User): string {
     const payload = { id: user.id };
 
     return jwt.sign(payload, process.env.JWT_SECRET);

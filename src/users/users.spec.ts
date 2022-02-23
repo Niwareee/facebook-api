@@ -1,7 +1,7 @@
-import * as request from "superagent";
+import * as request from 'superagent';
 
-let userId: string = '';
-let token: string = '';
+let userId = '';
+let token = '';
 
 describe('/api/v1/users', () => {
   beforeAll(async () => {
@@ -55,9 +55,7 @@ describe('/api/v1/users', () => {
 
     expect(status).toEqual(200);
     expect(body).toEqual({
-      posts: expect.arrayContaining(
-        expect.objectContaining({}),
-      ),
+      posts: expect.arrayContaining(expect.objectContaining({})),
     });
   });
 });

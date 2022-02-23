@@ -12,6 +12,8 @@ export class JwtGuard implements CanActivate {
     if (!token) return false;
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
+    request.userId = payload['id'];
+
     return !!(await this.usersService.findUnique({ id: payload['id'] }));
   }
 }

@@ -2,37 +2,41 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/services/prisma.service';
 import { UpdatePostDto } from '../dtos/update-post.dto';
 import { CreatePostDto } from '../dtos/create-post.dto';
+import { Post } from '@prisma/client';
 
 @Injectable()
 export class PostsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(dto: CreatePostDto) {
+  create(dto: CreatePostDto, authorId: string): Promise<Post> {
     return this.prisma.post.create({
-      data: dto
+      data: {
+        ...dto,
+        authorId,
+      },
     });
   }
 
-  findOne(id: number) {
+  findOne(id: number): Promise<Post> {
     return this.prisma.post.findUnique({
-      where: {id}
+      where: { id },
     });
   }
 
-  findAll() {
+  findAll(): Promise<Post[]> {
     return this.prisma.post.findMany();
   }
 
-  update(id: number, data: UpdatePostDto) {
+  update(id: number, dto: UpdatePostDto): Promise<Post> {
     return this.prisma.post.update({
-      where: {id},
-      data
+      where: { id },
+      data: dto,
     });
   }
 
-  delete(id) {
-    return this.prisma.post.delete({
-      where: {id}
+  delete(id): void {
+    this.prisma.post.delete({
+      where: { id },
     });
   }
 }

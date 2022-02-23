@@ -7,6 +7,7 @@ import {
   Body,
   Patch,
   Delete,
+  Request,
 } from '@nestjs/common';
 import { PostsService } from '../services/posts.service';
 import { CreatePostDto } from '../dtos/create-post.dto';
@@ -19,8 +20,8 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  create(@Body() dto: CreatePostDto) {
-    return this.postsService.create(dto);
+  create(@Body() dto: CreatePostDto, @Request() req: any) {
+    return this.postsService.create(dto, req.userId);
   }
 
   @Get(':id')
@@ -40,6 +41,6 @@ export class PostsController {
 
   @Delete(':id')
   delete(@Param('id') id: string) {
-    return this.postsService.delete(Number(id));
+    this.postsService.delete(Number(id));
   }
 }

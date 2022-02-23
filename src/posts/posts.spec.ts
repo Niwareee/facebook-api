@@ -1,7 +1,7 @@
-import * as request from "superagent";
+import * as request from 'superagent';
 
 let id: number;
-let token: string = '';
+let token = '';
 
 describe('/api/v1/posts', () => {
   beforeAll(async () => {
@@ -61,7 +61,7 @@ describe('/api/v1/posts', () => {
   test('[GET] /:id', async () => {
     const { status, body } = await request
       .get(`http://localhost:3000/api/v1/posts/${id}`)
-      .set('Authorization', token)
+      .set('Authorization', token);
 
     expect(status).toEqual(200);
     expect(body).toEqual({
@@ -84,7 +84,7 @@ describe('/api/v1/posts', () => {
       .set('Authorization', token)
       .send({ message });
 
-    expect(status).toEqual(200)
+    expect(status).toEqual(200);
     expect(body).toEqual({
       post: expect.objectContaining({
         id,

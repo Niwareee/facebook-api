@@ -2,6 +2,7 @@ import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { AuthenticationService } from '../services/authentication.service';
 import { RegisterDto } from '../dtos/register.dto';
 import { LoginDto } from '../dtos/login.dto';
+import { User } from '@prisma/client';
 
 @Controller('authentication')
 export class AuthenticationController {
@@ -9,7 +10,7 @@ export class AuthenticationController {
 
   @Post('login')
   @HttpCode(200)
-  async login(@Body() dto: LoginDto) {
+  async login(@Body() dto: LoginDto): Promise<{ user: User; token: string }> {
     const user = await this.authenticationService.login(dto);
     return {
       user,
@@ -18,7 +19,7 @@ export class AuthenticationController {
   }
 
   @Post('register')
-  register(@Body() dto: RegisterDto) {
+  register(@Body() dto: RegisterDto): Promise<User> {
     return this.authenticationService.register(dto);
   }
 }
