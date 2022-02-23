@@ -34,8 +34,8 @@ export class PostsService {
     });
   }
 
-  delete(id): void {
-    this.prisma.post.delete({
+  delete(id): Promise<Post> {
+    return this.prisma.post.delete({
       where: { id },
     });
   }

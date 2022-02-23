@@ -41,6 +41,6 @@ export class PostsController {
 
   @Delete(':id')
   delete(@Param('id') id: string) {
-    this.postsService.delete(Number(id));
+    return this.postsService.delete(Number(id));
   }
 }

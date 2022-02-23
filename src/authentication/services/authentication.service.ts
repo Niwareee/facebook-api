@@ -19,7 +19,7 @@ export class AuthenticationService {
   }
 
   register(dto: RegisterDto): Promise<User> {
-    return this.usersService.create(dto);
+    return this.usersService.create(dto.email, dto.password);
   }
 
   generateAccessToken(user: User): string {
