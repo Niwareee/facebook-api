@@ -10,7 +10,7 @@ export class AuthenticationController {
 
   @Post('login')
   @HttpCode(200)
-  async login(@Body() dto: LoginDto): Promise<{ user: User; token: string }> {
+  async login(@Body() dto: LoginDto): Promise<{user: User, token: string}> {
     const user = await this.authenticationService.login(dto);
     return {
       user,
@@ -19,7 +19,7 @@ export class AuthenticationController {
   }
 
   @Post('register')
-  register(@Body() dto: RegisterDto): Promise<User> {
+  register(@Body() dto: RegisterDto): Promise<{user: User}> {
     return this.authenticationService.register(dto);
   }
 }

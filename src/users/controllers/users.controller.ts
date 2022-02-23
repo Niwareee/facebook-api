@@ -10,12 +10,12 @@ export class UserController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get(':id/posts')
-  findAllPosts(@Param('id') id: string): Promise<Post[]> {
+  findAllPosts(@Param('id') id: string): Promise<{posts: Post[]}> {
     return this.usersService.findAllPosts(id);
   }
 
   @Get(':id/profile')
-  findProfile(@Param('id') id: string): Promise<Profile> {
+  findProfile(@Param('id') id: string): Promise<{profile: Profile}> {
     return this.usersService.findProfile(id);
   }
 
@@ -23,7 +23,7 @@ export class UserController {
   updateProfile(
     @Param('id') id: string,
     @Body() data: UpdateProfileDto,
-  ): Promise<Profile> {
+  ): Promise<{profile: Profile}> {
     return this.usersService.updateProfile(id, data);
   }
 }

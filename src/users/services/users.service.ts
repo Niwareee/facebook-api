@@ -1,48 +1,56 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/services/prisma.service';
 import { UpdateProfileDto } from '../dtos/update-profile.dto';
-import { Prisma, Post, Profile, User } from '@prisma/client';
+import { Prisma, Profile, Post, User } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   findUnique(where: Prisma.UserWhereUniqueInput): Promise<User> {
-    return this.prisma.user.findUnique({ where });
+    return this.prisma.user.findUnique({where});
   }
 
-  create(email:string, password:string): Promise<User> {
-    return this.prisma.user.create({
+  async create(email: string, password: string): Promise<{user: User}> {
+    const user = await this.prisma.user.create({
       data: {
         email,
         password,
         Profile: { create: { firstName: '', lastName: '' } },
       },
     });
+
+    return { user };
   }
 
-  findAllPosts(id: string): Promise<Post[]> {
-    return this.prisma.post.findMany({
+  async findAllPosts(id: string): Promise<{posts: Post[]}> {
+    const posts = await this.prisma.post.findMany({
       where: {
         authorId: id,
       },
     });
+
+    return { posts };
   }
 
-  findProfile(id: string): Promise<Profile> {
-    return this.prisma.profile.findUnique({
+  async findProfile(id: string): Promise<{profile: Profile}>{
+    const profile = await this.prisma.profile.findUnique({
       where: {
         userId: id,
       },
     });
+
+    return { profile };
   }
 
-  updateProfile(id: string, dto: UpdateProfileDto): Promise<Profile> {
-    return this.prisma.profile.update({
+  async updateProfile(id: string, dto: UpdateProfileDto): Promise<{profile: Profile}> {
+    const profile = await this.prisma.profile.update({
       where: {
         userId: id,
       },
       data: dto,
     });
+
+    return { profile };
   }
 }

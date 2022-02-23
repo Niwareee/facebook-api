@@ -9,7 +9,7 @@ import { LoginDto } from '../dtos/login.dto';
 export class AuthenticationService {
   constructor(private readonly usersService: UsersService) {}
 
-  async login({ email, password }: LoginDto): Promise<User> {
+  async login({ email, password }: LoginDto): Promise<User>{
     const user = await this.usersService.findUnique({ email });
     if (!user || user.password !== password) {
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
@@ -18,7 +18,7 @@ export class AuthenticationService {
     return user;
   }
 
-  register(dto: RegisterDto): Promise<User> {
+  register(dto: RegisterDto): Promise<{user: User}> {
     return this.usersService.create(dto.email, dto.password);
   }
 
